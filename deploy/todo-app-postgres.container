@@ -1,0 +1,18 @@
+[Unit]
+Description=DB for todo-app. This is a postgres DB btw
+
+[Container]
+Image=postgres:19beta3-alpine3.23
+ContainerName=todo-app-db
+Volume=todo-app-db.volume:/var/lib/19/postgres:Z
+Network=todo-app.network
+Environment=POSTGRES_DB=todo-app-db
+Environment=POSTGRES_USER=sergioar
+Secret=todo-app-db-pass,type=env,target=POSTGRES_PASSWORD
+PublishPort=8081:5432
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

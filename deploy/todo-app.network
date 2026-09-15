@@ -1,0 +1,3 @@
+[Network]
+Label=app=todo-app
+Internal=false
