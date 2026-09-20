@@ -8,6 +8,7 @@ Volume=todo-app-db.volume:/var/lib/19/postgres:Z
 Network=todo-app.network
 Environment=POSTGRES_DB=todo-app-db
 Environment=POSTGRES_USER=sergioar
+Environment=POSTGRES_MAX_CONNECTIONS=50
 Secret=todo-app-db-pass,type=env,target=POSTGRES_PASSWORD
 PublishPort=8081:5432
 
