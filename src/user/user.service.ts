@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { Users } from '../generated/prisma/client.js';
+import { Prisma } from '../generated/prisma/client.js';
+
+type Users = Prisma.UsersGetPayload<{include: {todos: true}}>
 
 @Injectable()
 export class UserService {
@@ -14,8 +16,12 @@ export class UserService {
               {fullName: credential},
               {email: credential}
             ],
+          },
+          include: {
+            todos: true
           }
-        });      
+        });     
+    
     return user;
   }
 }

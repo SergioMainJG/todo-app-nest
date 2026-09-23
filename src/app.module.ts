@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { UserModule } from './user/user.module.js';
 import configuration from './config/configuration.js';
 import { AuthModule } from './auth/auth.module.js';
+import { TodosModule } from './todos/todos.module.js';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { AuthModule } from './auth/auth.module.js';
     UserModule,
     PrismaModule,
     AuthModule,
+    TodosModule,
   ],
   controllers: [],
   providers: [],

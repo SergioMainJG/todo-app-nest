@@ -10,7 +10,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
+    "target": "ES2021",
+    "lib": ["ES2021"],
     "sourceMap": true,
     "outDir": "./dist",
     "incremental": true,
@@ -18,6 +19,7 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "types": ["vitest/globals", "node", "bun"],
-    "ignoreDeprecations": "6.0",
-  }
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src/**/*"]
 }
