@@ -5,4 +5,5 @@ export default () => ({
     JWT_EXPIRES_IN: parseInt(Bun.env.JWT_EXPIRES_IN!),
     HASH_MEMORY_COST: parseInt(Bun.env.HASH_MEMORY_COST!),
     HASH_TIME_COST: parseInt(Bun.env.HASH_TIME_COST!),
+    DOMAIN_ORIGIN: Bun.env.DOMAIN_ORIGIN,
 });
