@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: Install · Lint · Build · Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:19beta3-alpine3.23
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: todo_app_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci -d todo_app_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/todo_app_test
+      PORT: '3000'
+      JWT_SECRET: t+Qqx9V9zg9S3KNz2f3+Yr7zp4CUOAdkX3nXgLZreH+9jo3INbnt8gaUS4AXZBFK5r4kkBhjHiklLvqGCughxw== ## Use openssl rand -base64 64
+      JWT_EXPIRES_IN: '3600'
+      HASH_MEMORY_COST: '4096'
+      HASH_TIME_COST: '2'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Prisma generate
+        run: bun --bun run prisma generate
+
+      - name: Build
+        run: bun run build
+
+      - name: Unit tests
+        run: bun --bun run test --passWithNoTests
+
+      - name: Migrate test DB
+        run: bun --bun run prisma migrate deploy
+
+      - name: E2E tests
+        run: bun --bun run test:e2e
