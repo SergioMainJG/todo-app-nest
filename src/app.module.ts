@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, StandardSchemaValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from "@nestjs/jwt";
 import { ThrottlerModule } from "@nestjs/throttler";
@@ -9,6 +9,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { UserModule } from './user/user.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { TodosModule } from './todos/todos.module.js';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -21,6 +22,9 @@ import { TodosModule } from './todos/todos.module.js';
     TodosModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [{
+    provide: APP_PIPE,
+    useClass: StandardSchemaValidationPipe
+  }],
 })
 export class AppModule {}

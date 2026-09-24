@@ -9,5 +9,7 @@ export default defineConfig({
     globals: true,
     root: './',
     include: ['**/*.spec.ts'],
+    exclude: ['./src/generated/**/*'],
+    fileParallelism: false,
   },
 });
