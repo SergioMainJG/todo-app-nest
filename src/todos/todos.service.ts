@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '../generated/prisma/client';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { RemoveTodoDto } from "./dto/remove-todo.dto";
-import { UpdateTodoDto } from './dto/upate-todo.dto';
+import { UpdateTodoDto } from './dto/update-todo.dto';
 
 type Todo = Prisma.TodosGetPayload<{include:{user: false}}>
 

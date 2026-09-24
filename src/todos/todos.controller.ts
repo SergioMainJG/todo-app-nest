@@ -4,7 +4,7 @@ import { GetUser } from '../auth/decorators/get-user.decorator';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { RemoveTodoDto } from './dto/remove-todo.dto';
-import { UpdateTodoDto } from './dto/upate-todo.dto';
+import { UpdateTodoDto } from './dto/update-todo.dto';
 import type { AuthPayload } from '../types/auth-payload';
 import { PrismaExceptionsFilter } from '../shared/prisma-exceptions-filter/prisma-exceptions.filter';
 

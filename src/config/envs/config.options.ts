@@ -1,10 +1,8 @@
 import { type } from "arktype";
-import configuration from "./configuration";
 
 export default {
       envFilePath: '.env',
       isGlobal: true,
-      load: [configuration],
       validationSchema: type({
         PORT: 'string.numeric.parse',
         DATABASE_URL : 'string.url',

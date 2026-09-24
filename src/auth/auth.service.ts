@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -37,12 +37,12 @@ export class AuthService {
     });
 
     if(!userFromDB) 
-      throw new NotFoundException(`A user with that email doesn't exists`);
+      throw new UnauthorizedException(`The email or password is wrong`);
 
     const isPasswordCorrect = await Argon2Hashing.verifyPassword(password, userFromDB.password_hash);    
 
     if(!isPasswordCorrect)
-      throw new UnauthorizedException('The password is wrong');
+      throw new UnauthorizedException('The email or password is wrong');
 
     return userFromDB;
   }
