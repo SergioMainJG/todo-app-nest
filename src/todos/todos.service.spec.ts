@@ -1,5 +1,5 @@
 import { ConflictException, NotFoundException } from "@nestjs/common";
-import { CreateTodoDto, description } from "./dto/create-todo.dto";
+import { CreateTodoDto } from "./dto/create-todo.dto";
 import { TodosService } from "./todos.service";
 import { Status } from "../generated/prisma/enums";
 import { RemoveTodoDto } from "./dto/remove-todo.dto";

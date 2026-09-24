@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseFilters } from '@nestjs/common';
+import { Controller, Post, Body, UseFilters, SerializeOptions } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
 import { RegisterUserDto } from './dto/register-user.dto.js';
 import { LoginUserDto } from './dto/login-user.dto.js';
@@ -15,22 +15,24 @@ export class AuthController {
 
   @Post('register')
   @UseFilters(PrismaExceptionsFilter)
+  @SerializeOptions({schema: ResponseUserDto })
   async register(@Body({schema: RegisterUserDto}) registerUserDto: RegisterUserDto): Promise<ResponseUserDto> {
     const user = await this.authService.register(registerUserDto);
     
-    return ResponseUserDto.assert({
+    return {
       ...user,
       token: await this.jwtService.signAsync({ id: user.id, fullName: user.fullName, email: user.email }),
-    });
+    };
   }
 
   @Post('login')
+  @SerializeOptions({schema: ResponseUserDto })
   async login(@Body({schema: LoginUserDto}) loginUserDto: LoginUserDto ){
     const user = await this.authService.login(loginUserDto);
 
-    return ResponseUserDto.assert({
+    return {
       ...user,
       token: await this.jwtService.signAsync({ id: user.id, fullName: user.fullName, email: user.email }),
-    });
+    };
   }
 }
