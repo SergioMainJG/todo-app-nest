@@ -4,9 +4,9 @@ Description=DB for todo-app. This is a postgres DB btw
 [Container]
 Image=postgres:19beta3-alpine3.23
 ContainerName=todo-app-db
-Volume=todo-app-db.volume:/var/lib/19/postgres:Z
+Volume=todo-app-db.volume:/var/lib/postgres:Z
 Network=todo-app.network
-Environment=POSTGRES_DB=todo-app-db
+Environment=POSTGRES_DB=todo-app
 Environment=POSTGRES_USER=sergioar
 Environment=POSTGRES_MAX_CONNECTIONS=50
 Secret=todo-app-db-pass,type=env,target=POSTGRES_PASSWORD
