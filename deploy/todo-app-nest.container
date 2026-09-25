@@ -1,0 +1,25 @@
+[Unit]
+Description=Todo Api for todo-app. This is a NestJS backend btw
+After=todo-app-postgres.service
+Requires=todo-app-postgres.service
+
+[Container]
+Image=localhost/todo-app-nest:latest
+ContainerName=todo-app-nest
+Network=todo-app.network
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Secret=todo-app-db-url,type=env,target=DATABASE_URL
+Secret=todo-app-jwt-secret,type=env,target=JWT_SECRET
+Secret=todo-app-jwt-expires-in,type=env,target=JWT_EXPIRES_IN
+Secret=todo-app-hash-memory-cost,type=env,target=HASH_MEMORY_COST
+Secret=todo-app-hash-time-cost,type=env,target=HASH_TIME_COST
+Secret=todo-app-domain-origin,type=env,target=DOMAIN_ORIGIN
+PublishPort=3000:3000
+
+[Service]
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

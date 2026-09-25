@@ -70,5 +70,5 @@ jobs:
       - name: Migrate test DB
         run: bun --bun run prisma migrate deploy
 
-##      - name: E2E tests
-##        run: bun --bun run test:e2e
+      - name: E2E tests
+        run: bun --bun run test:e2e
