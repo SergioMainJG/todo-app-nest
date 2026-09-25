@@ -10,8 +10,8 @@ export default defineRailway(() => {
     },
     preDeploy: "bunx prisma migrate deploy",
     env: {
-      NODE_ENV: db.env.DATABASE_URL,
-      POSTGRES_PASSWORD: 'PROD',
+      NODE_ENV: 'PROD',
+      DATABASE_URL: db.env.DATABASE_URL,
       JWT_EXPIRES_IN: '900000',
       HASH_MEMORY_COST: '19456',
       HASH_TIME_COST: '2',
