@@ -7,6 +7,8 @@ import { ResponseUserDto } from './dto/response-user.dto.js';
 import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
+@SerializeOptions({schema: ResponseUserDto })
+@UseFilters(PrismaExceptionsFilter)
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
@@ -14,8 +16,6 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  @UseFilters(PrismaExceptionsFilter)
-  @SerializeOptions({schema: ResponseUserDto })
   async register(@Body({schema: RegisterUserDto}) registerUserDto: RegisterUserDto): Promise<ResponseUserDto> {
     const user = await this.authService.register(registerUserDto);
     
@@ -26,7 +26,6 @@ export class AuthController {
   }
 
   @Post('login')
-  @SerializeOptions({schema: ResponseUserDto })
   async login(@Body({schema: LoginUserDto}) loginUserDto: LoginUserDto ){
     const user = await this.authService.login(loginUserDto);
 

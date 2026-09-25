@@ -1,5 +1,6 @@
-import { INestApplication, StandardSchemaValidationPipe } from "@nestjs/common"
+import { INestApplication, StandardSchemaSerializerInterceptor, StandardSchemaValidationPipe } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config";
+import { Reflector } from "@nestjs/core";
 import helmet from "helmet";
 
 export const setupApp = async (app: INestApplication) => {
@@ -8,6 +9,7 @@ export const setupApp = async (app: INestApplication) => {
     const port = configService.get('PORT');
 
     app.useGlobalPipes(new StandardSchemaValidationPipe());
+    app.useGlobalInterceptors(new StandardSchemaSerializerInterceptor(app.get(Reflector)));
     app.use(helmet());
     app.enableCors({
         origin: configService.get('DOMAIN_ORIGIN'),
